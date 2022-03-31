@@ -1,0 +1,65 @@
+ use 169
+switched to db 169
+> db.collection.insertOne(
+... {
+... Name:"Sushma Hegde",
+... Usn:"1NT19IS169",
+... Sem:6,
+... Sec:"A"
+... }
+... )
+
+
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("62456a281909a8f168f5b917")
+}
+
+> db.collection.find({})
+{ "_id" : ObjectId("62456a281909a8f168f5b917"), "Name" : "Sushma Hegde", "Usn" : "1NT19IS169", "Sem" : 6, "Sec" : "A" }
+
+> db.collection.find({Sem:6})
+{ "_id" : ObjectId("62456a281909a8f168f5b917"), "Name" : "Sushma Hegde", "Usn" : "1NT19IS169", "Sem" : 6, "Sec" : "A" }
+> db.collection.insertMany([
+... {
+... Name:"Abc",
+... Usn:123,
+... Sem:1,
+... Sec:'A'
+... },
+... {
+... Name:"Def",
+... Usn:234,
+... Sem:2,
+... Sec:"B"
+... }
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("62456cc81909a8f168f5b918"),
+		ObjectId("62456cc81909a8f168f5b919")
+	]
+}
+> db.collection.find({Sec:'B'})
+{ "_id" : ObjectId("62456cc81909a8f168f5b919"), "Name" : "Def", "Usn" : 234, "Sem" : 2, "Sec" : "B" }
+> db.collection.update({Name:"Sushma Hegde"},{$set:{Name:"Pqrs"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.collection.find()
+{ "_id" : ObjectId("62456a281909a8f168f5b917"), "Name" : "Pqrs", "Usn" : "1NT19IS169", "Sem" : 6, "Sec" : "A" }
+{ "_id" : ObjectId("62456cc81909a8f168f5b918"), "Name" : "Abc", "Usn" : 123, "Sem" : 1, "Sec" : "A" }
+{ "_id" : ObjectId("62456cc81909a8f168f5b919"), "Name" : "Def", "Usn" : 234, "Sem" : 2, "Sec" : "B" }
+> db.collection.remove({Sec:'B'})
+WriteResult({ "nRemoved" : 1 })
+> db.collection.find()
+{ "_id" : ObjectId("62456a281909a8f168f5b917"), "Name" : "Pqrs", "Usn" : "1NT19IS169", "Sem" : 6, "Sec" : "A" }
+{ "_id" : ObjectId("62456cc81909a8f168f5b918"), "Name" : "Abc", "Usn" : 123, "Sem" : 1, "Sec" : "A" }
+> show collections
+collection
+
+
+> db.collection.update({Name:"Pqrs"},{$unset:{Name:"Sushma"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.collection.find()
+{ "_id" : ObjectId("62456a281909a8f168f5b917"), "Usn" : "1NT19IS169", "Sem" : 6, "Sec" : "A" }
+{ "_id" : ObjectId("62456cc81909a8f168f5b918"), "Name" : "Abc", "Usn" : 123, "Sem" : 1, "Sec" : "A" }
